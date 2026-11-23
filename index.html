@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#050806" />
+  <meta name="description" content="Chandu — Creative Developer &amp; Web Architect crafting high-performance digital flagships, interactive web experiences, and high-converting client web platforms." />
+  <meta name="keywords" content="Chandu, Creative Developer, Web Architect, Frontend Engineer, React, WebGL, Motion Design, UI/UX, Static Website, Emerald Theme" />
+
+  <title>Chandu // Creative Developer &amp; Digital Experience Architect</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <!-- Google Fonts: Syne, Space Grotesk, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              bg: '#050806',
+              surface: '#080d09',
+              card: '#0c140e',
+              green: '#10b981',
+              emerald: '#059669',
+              lime: '#34d399',
+              mint: '#6ee7b7',
+            }
+          },
+          fontFamily: {
+            sans: ['"Space Grotesk"', 'sans-serif'],
+            display: ['"Syne"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Stylesheet (Refined Obsidian & Emerald, Explicit @media Queries) -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Three.js CDN for 3D AI Core -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+<body class="bg-[#050806] text-[#f8fafc] font-sans selection:bg-emerald-500/25 selection:text-emerald-200 overflow-x-hidden antialiased">
+
+  <!-- Custom Cursor Elements (Refined Emerald) -->
+  <div id="custom-cursor-ring"><span id="cursor-text"></span></div>
+  <div id="custom-cursor-dot"></div>
+
+  <!-- Ambient Constellation Canvas -->
+  <canvas id="ambient-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+
+  <!-- Top Scroll Progress Bar -->
+  <div class="fixed top-0 left-0 w-full h-[2.5px] z-[1000] bg-transparent">
+    <div id="scroll-progress" class="h-full bg-gradient-to-r from-emerald-600 via-emerald-400 to-teal-400 w-0"></div>
+  </div>
+
+  <!-- ==================== NAVIGATION BAR ==================== -->
+  <header id="main-navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4 sm:py-5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#hero" data-cursor="Home" class="flex items-center space-x-2.5 group select-none">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 group-hover:scale-125 transition-transform"></span>
+        <span class="font-display font-extrabold text-xl text-white tracking-wider group-hover:text-emerald-400 transition-colors">CHANDU<span class="text-emerald-400">.</span></span>
+      </a>
+
+      <!-- Desktop Section Links -->
+      <nav class="hidden lg:flex items-center space-x-1 px-4 py-1.5 rounded-full glass-panel border border-emerald-900/30">
+        <a href="#about" data-cursor="About" class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-slate-300 hover:text-white hover:bg-white/5 transition-all">About</a>
+        <a href="#services" data-cursor="Services" class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-slate-300 hover:text-white hover:bg-white/5 transition-all">Services</a>
+        <a href="#pricing" data-cursor="Pricing" class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-slate-300 hover:text-white hover:bg-white/5 transition-all">Pricing</a>
+        <a href="#projects" data-cursor="Projects" class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-slate-300 hover:text-white hover:bg-white/5 transition-all">Projects</a>
+        <a href="#advantages" data-cursor="Why Me" class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-slate-300 hover:text-white hover:bg-white/5 transition-all">Why Choose Me</a>
+        <a href="#process" data-cursor="Process" class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-slate-300 hover:text-white hover:bg-white/5 transition-all">Process</a>
+        <a href="#contact" data-cursor="Contact" class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-slate-300 hover:text-white hover:bg-white/5 transition-all">Contact</a>
+      </nav>
+
+      <!-- Right Actions: Sound Toggle + Contact CTA -->
+      <div class="hidden sm:flex items-center space-x-3">
+        <button onclick="toggleAudio()" data-cursor="Sound" aria-label="Toggle Sound" class="p-2.5 rounded-xl border border-emerald-900/40 bg-emerald-950/20 hover:border-emerald-500/50 text-emerald-400 transition-all">
+          <svg id="audio-toggle-icon" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+
+        <a href="#contact" data-cursor="Connect" class="btn-primary !py-2.5 !px-5 !text-xs">
+          Start a Project
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="flex sm:hidden items-center space-x-2">
+        <button onclick="toggleMobileMenu()" class="p-2 rounded-lg border border-emerald-800/40 text-emerald-400 bg-emerald-950/30" aria-label="Toggle Menu">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Navigation -->
+  <div id="mobile-drawer" class="fixed inset-0 z-40 bg-[#050806]/98 backdrop-blur-2xl hidden flex-col justify-between p-8">
+    <div class="flex justify-between items-center pt-4">
+      <span class="font-mono text-xs text-emerald-400 tracking-wider">NAVIGATION</span>
+      <button onclick="toggleMobileMenu()" class="p-2 text-slate-400 text-xl">✕</button>
+    </div>
+    <nav class="flex flex-col space-y-4 my-auto">
+      <a href="#about" onclick="toggleMobileMenu()" class="text-2xl font-display font-bold text-white hover:text-emerald-400 border-b border-emerald-950/60 pb-2">About</a>
+      <a href="#services" onclick="toggleMobileMenu()" class="text-2xl font-display font-bold text-white hover:text-emerald-400 border-b border-emerald-950/60 pb-2">Services</a>
+      <a href="#pricing" onclick="toggleMobileMenu()" class="text-2xl font-display font-bold text-white hover:text-emerald-400 border-b border-emerald-950/60 pb-2">Pricing</a>
+      <a href="#projects" onclick="toggleMobileMenu()" class="text-2xl font-display font-bold text-white hover:text-emerald-400 border-b border-emerald-950/60 pb-2">Projects</a>
+      <a href="#advantages" onclick="toggleMobileMenu()" class="text-2xl font-display font-bold text-white hover:text-emerald-400 border-b border-emerald-950/60 pb-2">Why Choose Me</a>
+      <a href="#process" onclick="toggleMobileMenu()" class="text-2xl font-display font-bold text-white hover:text-emerald-400 border-b border-emerald-950/60 pb-2">Process</a>
+      <a href="#contact" onclick="toggleMobileMenu()" class="text-2xl font-display font-bold text-white hover:text-emerald-400 border-b border-emerald-950/60 pb-2">Contact</a>
+    </nav>
+    <div class="pt-4 border-t border-emerald-950/60">
+      <a href="#contact" onclick="toggleMobileMenu()" class="btn-primary w-full text-center">Start a Project</a>
+    </div>
+  </div>
+
+  <main class="relative z-10 flex flex-col">
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section id="hero" class="relative min-h-screen w-full flex items-center justify-center pt-28 pb-16 overflow-hidden">
+      <!-- Subtle Ambient Lighting (No harsh neon) -->
+      <div class="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-950/20 rounded-full blur-[140px] pointer-events-none"></div>
+      <div class="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 bg-teal-950/20 rounded-full blur-[140px] pointer-events-none"></div>
+      <div class="absolute inset-0 bg-cyber-grid opacity-25 pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+        <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center hero-grid">
+          
+          <!-- Left Column Content -->
+          <div class="lg:col-span-7 flex flex-col items-start text-left z-20">
+            
+            <!-- Creator Profile Pill -->
+            <div class="inline-flex items-center space-x-3 p-1.5 pr-4 rounded-full bg-emerald-950/40 border border-emerald-800/30 backdrop-blur-md mb-4">
+              <div class="w-8 h-8 rounded-full overflow-hidden border border-emerald-500/50 shrink-0">
+                <img src="assets/chandu.jpg" alt="Chandu" class="w-full h-full object-cover" />
+              </div>
+              <div class="flex flex-col text-left">
+                <span class="font-display font-bold text-xs text-white flex items-center space-x-1">
+                  <span>Chandu</span>
+                  <span class="text-emerald-400 text-xs">✓</span>
+                </span>
+                <span class="font-mono text-[9px] text-emerald-300">Web Developer &amp; Architect</span>
+              </div>
+            </div>
+
+            <!-- Availability Beacon -->
+            <div class="inline-flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full border border-emerald-800/40 bg-emerald-950/30 backdrop-blur-md mb-6">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span class="font-mono text-xs text-emerald-300 tracking-wider uppercase font-medium">
+                AVAILABLE FOR CLIENT PROJECTS &amp; CONTRACTS
+              </span>
+            </div>
+
+            <!-- Monolithic Typographic Headline -->
+            <h1 class="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl tracking-tight text-white leading-[0.98] mb-4">
+              <span class="block text-slate-400 text-xl sm:text-2xl md:text-3xl font-mono font-normal tracking-tight mb-2">
+                Hello, I am
+              </span>
+              <span class="text-gradient">
+                Chandu
+              </span>
+            </h1>
+
+            <!-- Subtitle -->
+            <div class="flex items-center space-x-2 text-emerald-400 font-mono text-sm sm:text-base md:text-lg tracking-wide uppercase font-semibold mb-6">
+              <span>✦</span>
+              <span>CREATIVE DEVELOPER &amp; DIGITAL EXPERIENCE ARCHITECT</span>
+            </div>
+
+            <!-- Narrative -->
+            <p class="text-slate-300 text-base sm:text-lg md:text-xl font-light leading-relaxed max-w-2xl mb-8">
+              Bridging cutting-edge frontend engineering, cinematic 3D interaction, and high-conversion web architectures for visionary businesses and institutions.
+            </p>
+
+            <!-- Buttons -->
+            <div class="flex flex-wrap items-center gap-4 w-full sm:w-auto">
+              <a href="#contact" data-cursor="Start" class="btn-primary w-full sm:w-auto">
+                Let&apos;s Build Something Exceptional
+                <svg class="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </a>
+              <a href="#projects" data-cursor="Explore" class="btn-secondary w-full sm:w-auto">
+                Explore All Projects
+              </a>
+            </div>
+
+          </div>
+
+          <!-- Right Column: 3D AI Core Canvas Container -->
+          <div class="lg:col-span-5 relative flex items-center justify-center min-h-[440px] sm:min-h-[520px] lg:min-h-[580px]">
+            <div id="ai-core-canvas-container" class="w-full h-full min-h-[420px] lg:min-h-[550px] relative z-10"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <a href="#about" data-cursor="Scroll" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-2 text-slate-500 hover:text-emerald-400 transition-colors z-20">
+        <span class="font-mono text-[10px] tracking-widest uppercase text-slate-400">SCROLL DOWN TO DISCOVER</span>
+        <div class="w-5 h-9 rounded-full border border-emerald-900/60 flex items-start justify-center p-1">
+          <div class="w-1.5 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
+        </div>
+      </a>
+    </section>
+
+    <!-- ==================== ABOUT & STORY SECTION ==================== -->
+    <section id="about" class="relative py-28 w-full overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <!-- Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-emerald-800/40 bg-emerald-950/20 font-mono text-[11px] text-emerald-400 tracking-widest uppercase mb-4">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span>INTEL // 01</span>
+          </div>
+          <h2 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-white">
+            Engineering Digital <span class="text-gradient-green">Distinction</span>
+          </h2>
+          <p class="mt-4 text-slate-400 text-base md:text-lg font-light">
+            A ruthless dedication to aesthetic precision, performance engineering, and measurable business growth.
+          </p>
+        </div>
+
+        <!-- Statistics Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
+          <div class="glass-card p-6 rounded-2xl border border-emerald-900/30">
+            <div class="font-display font-extrabold text-3xl sm:text-4xl text-white">3</div>
+            <div class="font-mono text-xs uppercase tracking-wider text-slate-300 font-semibold mt-2">Completed Flagships</div>
+            <div class="text-slate-400 text-xs font-light mt-1">Live institutional &amp; healthcare clients</div>
+          </div>
+          <div class="glass-card p-6 rounded-2xl border border-emerald-900/30">
+            <div class="font-display font-extrabold text-3xl sm:text-4xl text-white">99.4<span class="text-emerald-400 font-mono text-xl">%</span></div>
+            <div class="font-mono text-xs uppercase tracking-wider text-slate-300 font-semibold mt-2">Client Satisfaction</div>
+            <div class="text-slate-400 text-xs font-light mt-1">Based on post-launch audits</div>
+          </div>
+          <div class="glass-card p-6 rounded-2xl border border-emerald-900/30">
+            <div class="font-display font-extrabold text-3xl sm:text-4xl text-white">98<span class="text-emerald-400 font-mono text-xl">/100</span></div>
+            <div class="font-mono text-xs uppercase tracking-wider text-slate-300 font-semibold mt-2">Avg Performance</div>
+            <div class="text-slate-400 text-xs font-light mt-1">Lighthouse Core Web Vitals</div>
+          </div>
+          <div class="glass-card p-6 rounded-2xl border border-emerald-900/30">
+            <div class="font-display font-extrabold text-3xl sm:text-4xl text-white">1+</div>
+            <div class="font-mono text-xs uppercase tracking-wider text-slate-300 font-semibold mt-2">Year of Results</div>
+            <div class="text-slate-400 text-xs font-light mt-1">Proven live client execution</div>
+          </div>
+        </div>
+
+        <!-- Creator Profile Card -->
+        <div class="mb-16 glass-panel p-6 sm:p-8 rounded-3xl border border-emerald-900/40">
+          <div class="grid md:grid-cols-12 gap-8 items-center">
+            
+            <!-- Left Portrait -->
+            <div class="md:col-span-4 flex justify-center">
+              <div class="relative group">
+                <div class="relative w-56 sm:w-64 h-72 sm:h-80 rounded-2xl overflow-hidden border border-emerald-500/40 bg-black shadow-xl">
+                  <img src="assets/chandu.jpg" alt="Chandu" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
+                  <div class="absolute bottom-3 left-3 right-3 bg-[#050806]/90 backdrop-blur-md p-2.5 rounded-xl border border-emerald-800/40 text-center">
+                    <span class="font-mono text-[10px] text-emerald-400 tracking-wider uppercase font-bold block">CHANDU</span>
+                    <span class="font-mono text-[9px] text-slate-300">Web Developer &amp; Architect</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Profile Intel -->
+            <div class="md:col-span-8 space-y-4 text-left">
+              <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-950/40 border border-emerald-800/40 font-mono text-xs text-emerald-400">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span>AUTHENTICATED CREATIVE TECHNOLOGIST</span>
+              </div>
+              <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white">
+                Passionate Web Architect Crafting High-Impact Client Platforms
+              </h3>
+              <p class="text-slate-300 text-sm sm:text-base leading-relaxed font-light">
+                Hello, I am <strong class="text-emerald-400">Chandu</strong>. Over the last 1+ year, I have engineered institutional web flagships, interactive digital experiences, and scalable web platforms for education, healthcare, and growth-oriented businesses.
+              </p>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-3 font-mono text-xs">
+                <div class="p-3 rounded-xl bg-slate-900/60 border border-emerald-950">
+                  <div class="text-slate-400 text-[10px]">FOCUS</div>
+                  <div class="text-emerald-400 font-semibold mt-0.5">Client Lead Growth</div>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-900/60 border border-emerald-950">
+                  <div class="text-slate-400 text-[10px]">DELIVERY</div>
+                  <div class="text-white font-semibold mt-0.5">Fast Turnaround</div>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-900/60 border border-emerald-950">
+                  <div class="text-slate-400 text-[10px]">COMMUNICATION</div>
+                  <div class="text-emerald-400 font-semibold mt-0.5">Direct WhatsApp / Call</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Client Commitments & Standards (Designed for Business Clients) -->
+        <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+          
+          <!-- Client Partnership Guarantees & Work Standards -->
+          <div class="lg:col-span-7 glass-panel p-6 sm:p-8 rounded-3xl border border-emerald-900/40 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-4 border-b border-emerald-950 mb-6">
+                <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest font-semibold">// CLIENT PARTNERSHIP COMMITMENTS</span>
+                <span class="font-mono text-xs text-emerald-300 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-800/40">100% RELIABILITY</span>
+              </div>
+
+              <div class="space-y-4">
+                
+                <div class="p-4 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-emerald-700/50 transition-all">
+                  <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-950/60 border border-emerald-800/40 text-emerald-400 font-bold flex items-center justify-center shrink-0 text-sm">
+                      01
+                    </div>
+                    <div>
+                      <h4 class="font-display font-bold text-white text-base">Direct Developer Access (Zero Middlemen)</h4>
+                      <p class="text-slate-300 text-xs sm:text-sm mt-1 leading-relaxed font-light">
+                        You speak and collaborate directly with me (Chandu) from day one. No confusing sales reps, account managers, or delayed handoffs. Quick daily updates via WhatsApp or direct phone call.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-emerald-700/50 transition-all">
+                  <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-950/60 border border-emerald-800/40 text-emerald-400 font-bold flex items-center justify-center shrink-0 text-sm">
+                      02
+                    </div>
+                    <div>
+                      <h4 class="font-display font-bold text-white text-base">Guaranteed Delivery &amp; Transparent Milestones</h4>
+                      <p class="text-slate-300 text-xs sm:text-sm mt-1 leading-relaxed font-light">
+                        Clear milestone schedules with live staging preview links at each phase. You test and review actual progress before final launch, ensuring zero surprises and timely handoff.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-emerald-700/50 transition-all">
+                  <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-950/60 border border-emerald-800/40 text-emerald-400 font-bold flex items-center justify-center shrink-0 text-sm">
+                      03
+                    </div>
+                    <div>
+                      <h4 class="font-display font-bold text-white text-base">100% Code &amp; Asset Ownership (No Vendor Lock-In)</h4>
+                      <p class="text-slate-300 text-xs sm:text-sm mt-1 leading-relaxed font-light">
+                        Upon project completion, all source code, domain configurations, assets, and credentials belong 100% to you. No ongoing proprietary platform licensing or hostage fees.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-emerald-700/50 transition-all">
+                  <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-950/60 border border-emerald-800/40 text-emerald-400 font-bold flex items-center justify-center shrink-0 text-sm">
+                      04
+                    </div>
+                    <div>
+                      <h4 class="font-display font-bold text-white text-base">Post-Launch Warranty &amp; Technical Support</h4>
+                      <p class="text-slate-300 text-xs sm:text-sm mt-1 leading-relaxed font-light">
+                        Every project includes post-launch assistance to ensure smooth operation, hosting stability, and staff guidance for handling new inquiries.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Identity & Core Philosophy -->
+          <div class="lg:col-span-5 glass-panel p-6 sm:p-8 rounded-3xl border border-emerald-900/40 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-4 border-b border-emerald-950 mb-6">
+                <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest font-semibold">// DIRECT CHANNELS</span>
+                <span class="font-mono text-xs text-slate-400">VERIFIED</span>
+              </div>
+
+              <div class="space-y-4 font-mono text-xs">
+                <div class="p-4 rounded-xl bg-black/50 border border-emerald-950">
+                  <span class="text-emerald-400">developer:</span>
+                  <span class="text-white ml-2">Chandu</span>
+                </div>
+                <div class="p-4 rounded-xl bg-black/50 border border-emerald-950">
+                  <span class="text-emerald-400">email:</span>
+                  <a href="mailto:podilachandraprakash@gmail.com" class="text-white hover:text-emerald-300 ml-2 break-all">podilachandraprakash@gmail.com</a>
+                </div>
+                <div class="p-4 rounded-xl bg-black/50 border border-emerald-950">
+                  <span class="text-emerald-400">phone:</span>
+                  <a href="tel:+917569813732" class="text-white hover:text-emerald-300 ml-2">+91 75698 13732</a>
+                </div>
+                <div class="p-4 rounded-xl bg-black/50 border border-emerald-950">
+                  <span class="text-emerald-400">client guarantees:</span>
+                  <div class="text-slate-300 mt-1 space-y-1 pl-2">
+                    <div>• 100% Responsive on All Mobile Devices</div>
+                    <div>• Sub-Second Page Loading Speeds</div>
+                    <div>• Direct WhatsApp &amp; Calling Call-to-Actions</div>
+                    <div>• Clean, Secure Code with Zero Vulnerabilities</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-6 border-t border-emerald-950/80 mt-6 grid grid-cols-3 gap-2 text-center font-mono text-xs">
+              <div class="p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-900/30">
+                <div class="text-emerald-400 font-bold">100/100</div>
+                <div class="text-slate-400 text-[10px]">Speed</div>
+              </div>
+              <div class="p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-900/30">
+                <div class="text-white font-bold">3 Client</div>
+                <div class="text-slate-400 text-[10px]">Flagships</div>
+              </div>
+              <div class="p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-900/30">
+                <div class="text-emerald-400 font-bold">Fast</div>
+                <div class="text-slate-400 text-[10px]">Delivery</div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== SERVICES SECTION (100% SEQUENTIAL & UNSKIP-ABLE) ==================== -->
+    <section id="services" class="relative py-28 w-full overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-emerald-800/40 bg-emerald-950/20 font-mono text-[11px] text-emerald-400 tracking-widest uppercase mb-4">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span>CAPABILITIES // 02</span>
+          </div>
+          <h2 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-white">
+            Bespoke Digital <span class="text-gradient-green">Services</span>
+          </h2>
+          <p class="mt-4 text-slate-400 text-base md:text-lg font-light">
+            Every service detailed below is engineered to deliver category-defining aesthetic appeal and measurable business ROI.
+          </p>
+        </div>
+
+        <!-- Sequential Presentation of ALL 4 Services (Impossible to Skip) -->
+        <div class="space-y-10">
+          
+          <!-- Service 1: Website Development -->
+          <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-emerald-900/40">
+            <div class="grid lg:grid-cols-12 gap-8 items-start">
+              <div class="lg:col-span-5 space-y-3">
+                <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest font-semibold block">SERVICE 01 // HIGH-PERFORMANCE DIGITAL FLAGSHIPS</span>
+                <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white">Website Development</h3>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed font-light">
+                  Architecting bespoke, lightning-fast web applications powered by React, modern JavaScript, and clean semantic foundations. Built for extreme scalability, SEO dominance, and sub-second loading speeds.
+                </p>
+                <div class="p-4 rounded-xl bg-emerald-950/30 border border-emerald-800/40 mt-4">
+                  <div class="text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold mb-1">⚡ Primary Business ROI</div>
+                  <p class="text-white text-xs sm:text-sm font-medium">Increases user engagement by up to 300% and drastically lowers bounce rates through ultra-fast Core Web Vitals.</p>
+                </div>
+              </div>
+
+              <div class="lg:col-span-7 space-y-6">
+                <div>
+                  <h4 class="font-mono text-xs uppercase tracking-wider text-slate-400 mb-3">Key Deliverables</h4>
+                  <div class="grid sm:grid-cols-2 gap-3">
+                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-950 flex items-start space-x-2 text-xs sm:text-sm text-slate-200">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>Custom React &amp; Next Web Apps</span>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-950 flex items-start space-x-2 text-xs sm:text-sm text-slate-200">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>Performance &amp; Core Web Vitals Audits</span>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-950 flex items-start space-x-2 text-xs sm:text-sm text-slate-200">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>Headless CMS &amp; API Integrations</span>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-950 flex items-start space-x-2 text-xs sm:text-sm text-slate-200">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>Interactive WebGL &amp; Canvas Experiences</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 class="font-mono text-xs uppercase tracking-wider text-slate-400 mb-2">Technology Stack</h4>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">React</span>
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">JavaScript (ESNext)</span>
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">Tailwind CSS</span>
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">HTML5 Semantic Web</span>
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">Node.js</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service 2: Video Editing & Motion Graphics -->
+          <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-emerald-900/40">
+            <div class="grid lg:grid-cols-12 gap-8 items-start">
+              <div class="lg:col-span-5 space-y-3">
+                <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest font-semibold block">SERVICE 02 // CINEMATIC VISUAL STORYTELLING</span>
+                <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white">Video Editing &amp; Motion Graphics</h3>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed font-light">
+                  Creating thumb-stopping motion graphics, cinematic promotional video cuts, micro-animations, and interactive product demo reels that capture brand imagination and translate complex tech into compelling visual narratives.
+                </p>
+                <div class="p-4 rounded-xl bg-emerald-950/30 border border-emerald-800/40 mt-4">
+                  <div class="text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold mb-1">⚡ Primary Business ROI</div>
+                  <p class="text-white text-xs sm:text-sm font-medium">Skyrockets social engagement, video retention rates, and brand memorability across all digital channels.</p>
+                </div>
+              </div>
+
+              <div class="lg:col-span-7 space-y-6">
+                <div>
+                  <h4 class="font-mono text-xs uppercase tracking-wider text-slate-400 mb-3">Key Deliverables</h4>
+                  <div class="grid sm:grid-cols-2 gap-3">
+                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-950 flex items-start space-x-2 text-xs sm:text-sm text-slate-200">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>Product Launch Teasers</span>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-950 flex items-start space-x-2 text-xs sm:text-sm text-slate-200">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>UI/UX Micro-Interactions</span>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-950 flex items-start space-x-2 text-xs sm:text-sm text-slate-200">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>Cinematic Promo Edits</span>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-950 flex items-start space-x-2 text-xs sm:text-sm text-slate-200">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>Brand Motion Identity Guidelines</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 class="font-mono text-xs uppercase tracking-wider text-slate-400 mb-2">Technology Stack</h4>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">After Effects</span>
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">Premiere Pro</span>
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">Lottie Animations</span>
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">Web Animations API</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service 3: Digital Marketing -->
+          <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-emerald-900/40">
+            <div class="grid lg:grid-cols-12 gap-8 items-start">
+              <div class="lg:col-span-5 space-y-3">
+                <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest font-semibold block">SERVICE 03 // DATA-DRIVEN GROWTH ENGINES</span>
+                <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white">Digital Marketing</h3>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed font-light">
+                  Executing precision-targeted digital growth campaigns that combine organic search dominance (SEO), conversion rate optimization (CRO), and strategic funnel engineering to turn casual traffic into loyal high-ticket clients.
+                </p>
+                <div class="p-4 rounded-xl bg-emerald-950/30 border border-emerald-800/40 mt-4">
+                  <div class="text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold mb-1">⚡ Primary Business ROI</div>
+                  <p class="text-white text-xs sm:text-sm font-medium">Maximizes ROAS (Return on Ad Spend) and creates sustainable, compounding organic inbound pipelines.</p>
+                </div>
+              </div>
+
+              <div class="lg:col-span-7 space-y-6">
+                <div>
+                  <h4 class="font-mono text-xs uppercase tracking-wider text-slate-400 mb-3">Key Deliverables</h4>
+                  <div class="grid sm:grid-cols-2 gap-3">
+                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-950 flex items-start space-x-2 text-xs sm:text-sm text-slate-200">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>Technical SEO &amp; Architecture Overhaul</span>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-950 flex items-start space-x-2 text-xs sm:text-sm text-slate-200">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>Funnel Conversion Rate Optimization</span>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-950 flex items-start space-x-2 text-xs sm:text-sm text-slate-200">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>Data Analytics &amp; Attribution Tracking</span>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-950 flex items-start space-x-2 text-xs sm:text-sm text-slate-200">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>Strategic Lead Generation</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 class="font-mono text-xs uppercase tracking-wider text-slate-400 mb-2">Technology Stack</h4>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">Google Analytics 4</span>
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">Search Console</span>
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">Funnel Tracking</span>
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">A/B Testing Suites</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service 4: Social Media Marketing -->
+          <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-emerald-900/40">
+            <div class="grid lg:grid-cols-12 gap-8 items-start">
+              <div class="lg:col-span-5 space-y-3">
+                <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest font-semibold block">SERVICE 04 // HIGH-IMPACT BRAND PRESENCE</span>
+                <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white">Social Media Marketing</h3>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed font-light">
+                  Crafting viral-ready content strategies, aesthetic visual assets, and high-engagement social media campaigns across LinkedIn, Instagram, X (Twitter), and YouTube that position your brand as an undisputed industry authority.
+                </p>
+                <div class="p-4 rounded-xl bg-emerald-950/30 border border-emerald-800/40 mt-4">
+                  <div class="text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold mb-1">⚡ Primary Business ROI</div>
+                  <p class="text-white text-xs sm:text-sm font-medium">Builds a dedicated, loyal community and drives consistent organic inbound inquiries without high ad costs.</p>
+                </div>
+              </div>
+
+              <div class="lg:col-span-7 space-y-6">
+                <div>
+                  <h4 class="font-mono text-xs uppercase tracking-wider text-slate-400 mb-3">Key Deliverables</h4>
+                  <div class="grid sm:grid-cols-2 gap-3">
+                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-950 flex items-start space-x-2 text-xs sm:text-sm text-slate-200">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>Social Growth Strategy &amp; Calendars</span>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-950 flex items-start space-x-2 text-xs sm:text-sm text-slate-200">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>High-Converting Carousel &amp; Visual Assets</span>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-950 flex items-start space-x-2 text-xs sm:text-sm text-slate-200">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>Authority-Building Executive Branding</span>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-950 flex items-start space-x-2 text-xs sm:text-sm text-slate-200">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>Community Engagement Playbooks</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 class="font-mono text-xs uppercase tracking-wider text-slate-400 mb-2">Technology Stack</h4>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">Multi-Channel Automation</span>
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">Canva &amp; Figma Kits</span>
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">Sentiment Analysis</span>
+                    <span class="px-3 py-1 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 font-mono text-xs">Viral Analytics</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== PRICING PACKAGES ==================== -->
+    <section id="pricing" class="relative py-28 w-full overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-emerald-800/40 bg-emerald-950/20 font-mono text-[11px] text-emerald-400 tracking-widest uppercase mb-4">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span>PACKAGES // 03</span>
+          </div>
+          <h2 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-white">
+            Simple, Transparent <span class="text-gradient-green">Pricing</span>
+          </h2>
+          <p class="mt-4 text-slate-400 text-base md:text-lg font-light">
+            No hidden fees. No surprises. Pick the package that fits your business and go live fast.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+
+          <!-- Basic Package -->
+          <div class="glass-panel p-8 rounded-3xl border border-emerald-900/40 flex flex-col justify-between">
+            <div>
+              <div class="font-mono text-xs text-emerald-400 uppercase tracking-widest font-semibold mb-2">PACKAGE 01 // STARTER</div>
+              <h3 class="font-display font-extrabold text-2xl text-white mb-1">Basic Website</h3>
+              <div class="font-display font-black text-4xl text-emerald-400 mb-1">&#8377;7,999<span class="text-slate-400 font-mono text-base font-normal">/-</span></div>
+              <p class="text-slate-400 text-sm font-light mb-6">Perfect for small businesses, clinics, schools and local services looking to establish a professional online presence.</p>
+
+              <ul class="space-y-3 font-mono text-xs text-slate-300 mb-8">
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>5-Page Website Layout</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Free Hosting Included</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>50&ndash;100 MB Website Assets</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>WhatsApp Contact Button</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Google Search Console Setup</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>5 Revision Rounds Before Deployment</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Google Meet Consultation</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Website Deployment</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Basic On-Page SEO</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Contact Information &amp; Business Details Page</span></li>
+              </ul>
+            </div>
+            <div class="flex items-center space-x-2 bg-amber-950/30 border border-amber-700/30 rounded-xl px-4 py-2.5 mb-4">
+              <span class="text-amber-400 text-sm">&#9888;</span>
+              <p class="font-mono text-[11px] text-amber-300/80 leading-snug"><span class="font-bold text-amber-300">Domain cost is billed separately.</span> Typically &#8377;800&ndash;&#8377;1,500/year depending on the extension (.com, .in, .co.in).</p>
+            </div>
+            <a href="https://wa.me/917569813732?text=Hi%20Chandu%2C%20I%20am%20interested%20in%20the%20Basic%20Website%20package%20for%20%E2%82%B97%2C999." target="_blank" rel="noopener noreferrer" class="btn-secondary w-full text-center block py-3.5 rounded-xl font-mono text-xs tracking-wider">
+              Get Started &mdash; &#8377;7,999 &#8599;
+            </a>
+          </div>
+
+          <!-- Corporate Package (highlighted) -->
+          <div class="glass-panel p-8 rounded-3xl border border-emerald-500/50 flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-emerald-500 font-mono text-[10px] text-black font-bold uppercase tracking-wider">MOST POPULAR</div>
+            <div>
+              <div class="font-mono text-xs text-emerald-400 uppercase tracking-widest font-semibold mb-2">PACKAGE 02 // CORPORATE</div>
+              <h3 class="font-display font-extrabold text-2xl text-white mb-1">Corporate Website</h3>
+              <div class="font-display font-black text-4xl text-emerald-400 mb-1">&#8377;14,999<span class="text-slate-400 font-mono text-base font-normal">/-</span></div>
+              <p class="text-slate-400 text-sm font-light mb-6">Full-featured institutional portal for schools, hospitals, businesses and brands that need a powerful professional presence.</p>
+
+              <ul class="space-y-3 font-mono text-xs text-slate-300 mb-8">
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>10-Page Fully Responsive Website</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Free Hosting Included</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Up to 250&ndash;300 MB Website Assets</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Custom UI Design</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>WhatsApp Integration</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Direct Call Button</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Email Button</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Social Media Links</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Google Search Console Setup</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Unlimited Revision Rounds (In-Scope) Before Deployment</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Google Meet Consultation</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Website Deployment</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Basic On-Page SEO</span></li>
+                <li class="flex items-start space-x-2"><span class="text-emerald-400 font-bold mt-0.5">&#10003;</span><span>Custom Sections &amp; Layouts</span></li>
+              </ul>
+            </div>
+            <div class="flex items-center space-x-2 bg-amber-950/30 border border-amber-700/30 rounded-xl px-4 py-2.5 mb-4">
+              <span class="text-amber-400 text-sm">&#9888;</span>
+              <p class="font-mono text-[11px] text-amber-300/80 leading-snug"><span class="font-bold text-amber-300">Domain cost is billed separately.</span> Typically &#8377;800&ndash;&#8377;1,500/year depending on the extension (.com, .in, .co.in).</p>
+            </div>
+            <a href="https://wa.me/917569813732?text=Hi%20Chandu%2C%20I%20am%20interested%20in%20the%20Corporate%20Website%20package%20for%20%E2%82%B914%2C999." target="_blank" rel="noopener noreferrer" class="btn-primary w-full text-center block py-3.5 rounded-xl font-mono text-xs tracking-wider">
+              Get Started &mdash; &#8377;14,999 &#8599;
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Bottom Note -->
+        <p class="text-center text-slate-500 font-mono text-xs mt-10">
+          &#128172; Need a custom quote or have specific requirements? <a href="#contact" class="text-emerald-400 hover:underline">Let&apos;s talk directly &rarr;</a>
+        </p>
+
+      </div>
+    </section>
+
+    <!-- ==================== FEATURED PROJECTS (FULL CASE STUDIES IN FLOW) ==================== -->
+    <section id="projects" class="relative py-28 w-full overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-emerald-800/40 bg-emerald-950/20 font-mono text-[11px] text-emerald-400 tracking-widest uppercase mb-4">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span>SHOWCASE // 04</span>
+          </div>
+          <h2 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-white">
+            Featured Digital <span class="text-gradient-green">Flagships</span>
+          </h2>
+          <p class="mt-4 text-slate-400 text-base md:text-lg font-light">
+            Complete architectural breakdowns of real client applications, institutional portals, and high-impact digital products.
+          </p>
+        </div>
+
+        <!-- Sequential Complete Project Case Studies (Zero Hidden Modals, Impossible to Skip) -->
+        <div class="space-y-12">
+          
+          <!-- Project 1: Star Children School (Real Work) -->
+          <div class="glass-panel rounded-3xl overflow-hidden border border-emerald-900/40">
+            <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+              <div class="lg:col-span-5 relative min-h-[300px] lg:min-h-full overflow-hidden bg-slate-950">
+                <img src="assets/star-children-school.jpg" alt="Star Children School" class="w-full h-full object-cover" />
+                <div class="absolute top-4 left-4 flex flex-wrap gap-2">
+                  <span class="px-3 py-1 rounded-full bg-[#050806]/90 font-mono text-[11px] text-emerald-400 font-semibold border border-emerald-800/40">2,500+ Monthly Visitors</span>
+                  <span class="px-2.5 py-1 rounded-full bg-emerald-950/90 font-mono text-[10px] text-emerald-300 font-bold border border-emerald-700/50">LIVE CLIENT</span>
+                </div>
+              </div>
+
+              <div class="lg:col-span-7 p-6 sm:p-8 md:p-10 flex flex-col justify-between space-y-6">
+                <div>
+                  <div class="font-mono text-xs text-emerald-400 uppercase tracking-widest font-semibold mb-1">PROJECT 01 // EDUCATIONAL PLATFORM &amp; SCHOOL PORTAL</div>
+                  <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white">Star Children School</h3>
+                  <div class="flex flex-wrap gap-4 font-mono text-xs text-slate-400 mt-2 pb-4 border-b border-emerald-950">
+                    <div>CLIENT: <span class="text-white font-semibold">Star Children School Management</span></div>
+                    <div>TIMELINE: <span class="text-emerald-400 font-semibold">4 Weeks</span></div>
+                    <div>SPEED: <span class="text-white font-semibold">0.4s Fast Load</span></div>
+                  </div>
+
+                  <div class="grid md:grid-cols-2 gap-4 mt-6">
+                    <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+                      <div class="text-slate-300 font-mono text-xs font-semibold uppercase tracking-wider mb-1.5">The Challenge</div>
+                      <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                        Develop a modern, highly engaging institutional website for parents and students with curriculum details, event galleries, and online admission enquiry flows.
+                      </p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-emerald-950/20 border border-emerald-900/40">
+                      <div class="text-emerald-400 font-mono text-xs font-semibold uppercase tracking-wider mb-1.5">The Engineering Solution</div>
+                      <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                        Architected a mobile-first, lightweight responsive web platform with clean semantic structure, fluid navigation, and instant inquiry response channels.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="mt-6">
+                    <h4 class="font-mono text-xs uppercase tracking-wider text-slate-400 mb-2.5">Verified Outcomes</h4>
+                    <div class="grid sm:grid-cols-3 gap-2.5 font-mono text-xs">
+                      <div class="p-2.5 rounded-lg bg-black/40 border border-emerald-950 text-slate-300 flex items-center space-x-1.5">
+                        <span class="text-emerald-400 font-bold">✓</span>
+                        <span>2,500+ Active Monthly Visitors</span>
+                      </div>
+                      <div class="p-2.5 rounded-lg bg-black/40 border border-emerald-950 text-slate-300 flex items-center space-x-1.5">
+                        <span class="text-emerald-400 font-bold">✓</span>
+                        <span>+40% Digital Inquiries</span>
+                      </div>
+                      <div class="p-2.5 rounded-lg bg-black/40 border border-emerald-950 text-slate-300 flex items-center space-x-1.5">
+                        <span class="text-emerald-400 font-bold">✓</span>
+                        <span>100% Core Web Vitals</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-4 border-t border-emerald-950 flex flex-wrap items-center justify-between gap-4">
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-2.5 py-1 rounded-md bg-emerald-950/30 border border-emerald-900/40 text-emerald-300 font-mono text-xs">#WebDevelopment</span>
+                    <span class="px-2.5 py-1 rounded-md bg-emerald-950/30 border border-emerald-900/40 text-emerald-300 font-mono text-xs">#ResponsiveDesign</span>
+                    <span class="px-2.5 py-1 rounded-md bg-emerald-950/30 border border-emerald-900/40 text-emerald-300 font-mono text-xs">#SEOArchitecture</span>
+                  </div>
+                  <a href="https://www.starchildrenschool.in/" target="_blank" rel="noopener noreferrer" class="btn-primary !py-2.5 !px-5 !text-xs">
+                    Visit Live Website ↗
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2: Orchids High Schools (Real Work) -->
+          <div class="glass-panel rounded-3xl overflow-hidden border border-emerald-900/40">
+            <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+              <div class="lg:col-span-5 relative min-h-[300px] lg:min-h-full overflow-hidden bg-slate-950">
+                <img src="assets/orchids-high-school.jpg" alt="Orchids High Schools" class="w-full h-full object-cover" />
+                <div class="absolute top-4 left-4 flex flex-wrap gap-2">
+                  <span class="px-3 py-1 rounded-full bg-[#050806]/90 font-mono text-[11px] text-emerald-400 font-semibold border border-emerald-800/40">3,000+ Students Served</span>
+                  <span class="px-2.5 py-1 rounded-full bg-emerald-950/90 font-mono text-[10px] text-emerald-300 font-bold border border-emerald-700/50">LIVE CLIENT</span>
+                </div>
+              </div>
+
+              <div class="lg:col-span-7 p-6 sm:p-8 md:p-10 flex flex-col justify-between space-y-6">
+                <div>
+                  <div class="font-mono text-xs text-emerald-400 uppercase tracking-widest font-semibold mb-1">PROJECT 02 // EDUCATION &amp; MULTI-CAMPUS FLAGSHIP</div>
+                  <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white">Orchids High Schools</h3>
+                  <div class="flex flex-wrap gap-4 font-mono text-xs text-slate-400 mt-2 pb-4 border-b border-emerald-950">
+                    <div>CLIENT: <span class="text-white font-semibold">Orchids High Schools Group</span></div>
+                    <div>TIMELINE: <span class="text-emerald-400 font-semibold">6 Weeks</span></div>
+                    <div>UPTIME: <span class="text-white font-semibold">99.9% Reliable</span></div>
+                  </div>
+
+                  <div class="grid md:grid-cols-2 gap-4 mt-6">
+                    <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+                      <div class="text-slate-300 font-mono text-xs font-semibold uppercase tracking-wider mb-1.5">The Challenge</div>
+                      <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                        Unify institutional identity across multiple branches into a cohesive, high-trust digital portal with seamless mobile access for academic announcements.
+                      </p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-emerald-950/20 border border-emerald-900/40">
+                      <div class="text-emerald-400 font-mono text-xs font-semibold uppercase tracking-wider mb-1.5">The Engineering Solution</div>
+                      <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                        Built a high-performance web architecture with dynamic academic calendars, admission query funnels, and optimized image galleries.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="mt-6">
+                    <h4 class="font-mono text-xs uppercase tracking-wider text-slate-400 mb-2.5">Verified Outcomes</h4>
+                    <div class="grid sm:grid-cols-3 gap-2.5 font-mono text-xs">
+                      <div class="p-2.5 rounded-lg bg-black/40 border border-emerald-950 text-slate-300 flex items-center space-x-1.5">
+                        <span class="text-emerald-400 font-bold">✓</span>
+                        <span>65% Faster Page Load</span>
+                      </div>
+                      <div class="p-2.5 rounded-lg bg-black/40 border border-emerald-950 text-slate-300 flex items-center space-x-1.5">
+                        <span class="text-emerald-400 font-bold">✓</span>
+                        <span>3x Digital Lead Captures</span>
+                      </div>
+                      <div class="p-2.5 rounded-lg bg-black/40 border border-emerald-950 text-slate-300 flex items-center space-x-1.5">
+                        <span class="text-emerald-400 font-bold">✓</span>
+                        <span>Zero Announcement Peak Downtime</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-4 border-t border-emerald-950 flex flex-wrap items-center justify-between gap-4">
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-2.5 py-1 rounded-md bg-emerald-950/30 border border-emerald-900/40 text-emerald-300 font-mono text-xs">#FrontendArchitecture</span>
+                    <span class="px-2.5 py-1 rounded-md bg-emerald-950/30 border border-emerald-900/40 text-emerald-300 font-mono text-xs">#ResponsiveUI</span>
+                    <span class="px-2.5 py-1 rounded-md bg-emerald-950/30 border border-emerald-900/40 text-emerald-300 font-mono text-xs">#JavaScript</span>
+                  </div>
+                  <a href="https://orchidshighschools.com/" target="_blank" rel="noopener noreferrer" class="btn-primary !py-2.5 !px-5 !text-xs">
+                    Visit Live Website ↗
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: Sri Usha Multi Speciality Hospital (Real Work) -->
+          <div class="glass-panel rounded-3xl overflow-hidden border border-emerald-900/40">
+            <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+              <div class="lg:col-span-5 relative min-h-[300px] lg:min-h-full overflow-hidden bg-slate-950">
+                <img src="assets/sri-usha-hospital.jpg" alt="Sri Usha Multi Speciality Hospital" class="w-full h-full object-cover" />
+                <div class="absolute top-4 left-4 flex flex-wrap gap-2">
+                  <span class="px-3 py-1 rounded-full bg-[#050806]/90 font-mono text-[11px] text-emerald-400 font-semibold border border-emerald-800/40">24/7 Emergency Access</span>
+                  <span class="px-2.5 py-1 rounded-full bg-emerald-950/90 font-mono text-[10px] text-emerald-300 font-bold border border-emerald-700/50">LIVE CLIENT</span>
+                </div>
+              </div>
+
+              <div class="lg:col-span-7 p-6 sm:p-8 md:p-10 flex flex-col justify-between space-y-6">
+                <div>
+                  <div class="font-mono text-xs text-emerald-400 uppercase tracking-widest font-semibold mb-1">PROJECT 03 // HEALTHCARE &amp; HOSPITAL MANAGEMENT PORTAL</div>
+                  <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white">Sri Usha Multi Speciality Hospital</h3>
+                  <div class="flex flex-wrap gap-4 font-mono text-xs text-slate-400 mt-2 pb-4 border-b border-emerald-950">
+                    <div>CLIENT: <span class="text-white font-semibold">Sri Usha Hospital Administration</span></div>
+                    <div>TIMELINE: <span class="text-emerald-400 font-semibold">5 Weeks</span></div>
+                    <div>SPEED: <span class="text-white font-semibold">Sub-Second Access</span></div>
+                  </div>
+
+                  <div class="grid md:grid-cols-2 gap-4 mt-6">
+                    <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+                      <div class="text-slate-300 font-mono text-xs font-semibold uppercase tracking-wider mb-1.5">The Challenge</div>
+                      <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                        Establish an authoritative, patient-first healthcare web portal with 24/7 emergency hotline integrations, doctor specialty directories, and online appointment booking.
+                      </p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-emerald-950/20 border border-emerald-900/40">
+                      <div class="text-emerald-400 font-mono text-xs font-semibold uppercase tracking-wider mb-1.5">The Engineering Solution</div>
+                      <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                        Developed an accessible medical portal with quick appointment dispatch, doctor consultation directories, and mobile one-tap calling.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="mt-6">
+                    <h4 class="font-mono text-xs uppercase tracking-wider text-slate-400 mb-2.5">Verified Outcomes</h4>
+                    <div class="grid sm:grid-cols-3 gap-2.5 font-mono text-xs">
+                      <div class="p-2.5 rounded-lg bg-black/40 border border-emerald-950 text-slate-300 flex items-center space-x-1.5">
+                        <span class="text-emerald-400 font-bold">✓</span>
+                        <span>350+ Monthly Digital Bookings</span>
+                      </div>
+                      <div class="p-2.5 rounded-lg bg-black/40 border border-emerald-950 text-slate-300 flex items-center space-x-1.5">
+                        <span class="text-emerald-400 font-bold">✓</span>
+                        <span>Instant Emergency Hotline Access</span>
+                      </div>
+                      <div class="p-2.5 rounded-lg bg-black/40 border border-emerald-950 text-slate-300 flex items-center space-x-1.5">
+                        <span class="text-emerald-400 font-bold">✓</span>
+                        <span>High Patient Satisfaction</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-4 border-t border-emerald-950 flex flex-wrap items-center justify-between gap-4">
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-2.5 py-1 rounded-md bg-emerald-950/30 border border-emerald-900/40 text-emerald-300 font-mono text-xs">#HealthcareWeb</span>
+                    <span class="px-2.5 py-1 rounded-md bg-emerald-950/30 border border-emerald-900/40 text-emerald-300 font-mono text-xs">#EmergencyHotlines</span>
+                    <span class="px-2.5 py-1 rounded-md bg-emerald-950/30 border border-emerald-900/40 text-emerald-300 font-mono text-xs">#MobileCallingAPI</span>
+                  </div>
+                  <a href="https://www.sriushamultispecialityhospital.in/" target="_blank" rel="noopener noreferrer" class="btn-primary !py-2.5 !px-5 !text-xs">
+                    Visit Live Website ↗
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== CLIENT ADVANTAGES & BUSINESS SOLUTIONS ==================== -->
+    <section id="advantages" class="relative py-28 w-full overflow-hidden">
+      <!-- Hidden anchor alias for legacy links -->
+      <div id="skills" class="absolute -top-20"></div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-emerald-800/40 bg-emerald-950/20 font-mono text-[11px] text-emerald-400 tracking-widest uppercase mb-4">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span>CLIENT ADVANTAGES // 05</span>
+          </div>
+          <h2 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-white">
+            Why Businesses Choose <span class="text-gradient-green">Chandu</span>
+          </h2>
+          <p class="mt-4 text-slate-400 text-base md:text-lg font-light">
+            Engineered specifically to generate inquiries, build institutional authority, and turn website visitors into paying clients.
+          </p>
+        </div>
+
+        <!-- 6 Client Strategic Advantage Cards -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          
+          <!-- Advantage 1: Lead & Inquiry Focus -->
+          <div class="glass-card p-6 sm:p-7 rounded-2xl border border-emerald-900/30 flex flex-col justify-between hover:border-emerald-700/50 transition-all">
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="font-mono text-xs text-emerald-400">01 // REVENUE &amp; GROWTH</span>
+                <span class="font-mono text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800/40">HIGH CONVERSION</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white">Lead Generation &amp; Inquiries</h3>
+              <p class="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed font-light">
+                Your website is your best salesperson. We design high-converting funnels with direct WhatsApp triggers, instant click-to-call buttons, and simple enquiry forms that turn casual browsers into qualified leads.
+              </p>
+              <div class="mt-4 pt-3 border-t border-emerald-950 grid grid-cols-2 gap-2 font-mono text-xs text-slate-400">
+                <div>RESULT: <span class="text-emerald-400 font-semibold">+40% More Calls</span></div>
+                <div>ENGAGEMENT: <span class="text-white font-semibold">1-Tap Direct Chat</span></div>
+              </div>
+            </div>
+            <div class="mt-4 p-2.5 rounded-lg bg-black/60 border border-emerald-950 font-mono text-[11px] text-emerald-400">
+              ✓ Direct WhatsApp &amp; Inbound Calling Channel
+            </div>
+          </div>
+
+          <!-- Advantage 2: 0.4s Sub-Second Speed -->
+          <div class="glass-card p-6 sm:p-7 rounded-2xl border border-emerald-900/30 flex flex-col justify-between hover:border-emerald-700/50 transition-all">
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="font-mono text-xs text-emerald-400">02 // PERFORMANCE</span>
+                <span class="font-mono text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800/40">SUB-SECOND</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white">0.4s Instant Loading Speed</h3>
+              <p class="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed font-light">
+                53% of mobile users abandon sites that take longer than 3 seconds to load. We build clean, lightweight static code that renders almost instantly, ensuring you never lose another impatient customer.
+              </p>
+              <div class="mt-4 pt-3 border-t border-emerald-950 grid grid-cols-2 gap-2 font-mono text-xs text-slate-400">
+                <div>BENCHMARK: <span class="text-emerald-400 font-semibold">0.4s Total Load</span></div>
+                <div>LIGHTHOUSE: <span class="text-white font-semibold">100/100 Core Vitals</span></div>
+              </div>
+            </div>
+            <div class="mt-4 p-2.5 rounded-lg bg-black/60 border border-emerald-950 font-mono text-[11px] text-emerald-400">
+              ✓ Fast loading on any 4G/5G mobile connection
+            </div>
+          </div>
+
+          <!-- Advantage 3: Proven Domain Expertise -->
+          <div class="glass-card p-6 sm:p-7 rounded-2xl border border-emerald-900/30 flex flex-col justify-between hover:border-emerald-700/50 transition-all">
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="font-mono text-xs text-emerald-400">03 // PROVEN TRACK RECORD</span>
+                <span class="font-mono text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800/40">REAL CLIENTS</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white">Education &amp; Healthcare Expertise</h3>
+              <p class="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed font-light">
+                Proven track record delivering live institutional platforms for schools (admissions, academic calendars, event galleries) and hospitals (doctor directories, 24/7 emergency hotlines).
+              </p>
+              <div class="mt-4 pt-3 border-t border-emerald-950 grid grid-cols-2 gap-2 font-mono text-xs text-slate-400">
+                <div>SCHOOLS: <span class="text-emerald-400 font-semibold">Star Children &amp; Orchids</span></div>
+                <div>HEALTHCARE: <span class="text-white font-semibold">Sri Usha Hospital</span></div>
+              </div>
+            </div>
+            <div class="mt-4 p-2.5 rounded-lg bg-black/60 border border-emerald-950 font-mono text-[11px] text-emerald-400">
+              ✓ Real verified websites live on the internet today
+            </div>
+          </div>
+
+          <!-- Advantage 4: 100% Mobile & Touch Perfection -->
+          <div class="glass-card p-6 sm:p-7 rounded-2xl border border-emerald-900/30 flex flex-col justify-between hover:border-emerald-700/50 transition-all">
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="font-mono text-xs text-emerald-400">04 // USER EXPERIENCE</span>
+                <span class="font-mono text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800/40">RESPONSIVE</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white">100% Mobile &amp; Touch Perfection</h3>
+              <p class="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed font-light">
+                Over 85% of traffic comes from smartphones. Every button, menu, image, and text block is crafted with media queries to provide a seamless, native app-like experience on every device.
+              </p>
+              <div class="mt-4 pt-3 border-t border-emerald-950 grid grid-cols-2 gap-2 font-mono text-xs text-slate-400">
+                <div>COMPATIBILITY: <span class="text-emerald-400 font-semibold">iOS &amp; Android</span></div>
+                <div>LAYOUT: <span class="text-white font-semibold">Zero Horizontal Glitch</span></div>
+              </div>
+            </div>
+            <div class="mt-4 p-2.5 rounded-lg bg-black/60 border border-emerald-950 font-mono text-[11px] text-emerald-400">
+              ✓ Tested on real smartphones across multiple screen sizes
+            </div>
+          </div>
+
+          <!-- Advantage 5: Zero Maintenance & Ironclad Security -->
+          <div class="glass-card p-6 sm:p-7 rounded-2xl border border-emerald-900/30 flex flex-col justify-between hover:border-emerald-700/50 transition-all">
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="font-mono text-xs text-emerald-400">05 // RELIABILITY &amp; SECURITY</span>
+                <span class="font-mono text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800/40">ZERO HACK RISK</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white">Zero Maintenance &amp; 100% Uptime</h3>
+              <p class="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed font-light">
+                Say goodbye to broken WordPress plugins, database crashes, and malware attacks. Our static architecture is inherently un-hackable, requires zero ongoing maintenance fees, and runs 24/7/365.
+              </p>
+              <div class="mt-4 pt-3 border-t border-emerald-950 grid grid-cols-2 gap-2 font-mono text-xs text-slate-400">
+                <div>UPTIME: <span class="text-emerald-400 font-semibold">99.9% Always Live</span></div>
+                <div>MAINTENANCE: <span class="text-white font-semibold">Zero Monthly Cost</span></div>
+              </div>
+            </div>
+            <div class="mt-4 p-2.5 rounded-lg bg-black/60 border border-emerald-950 font-mono text-[11px] text-emerald-400">
+              ✓ Immune to SQL injection and plugin update breakages
+            </div>
+          </div>
+
+          <!-- Advantage 6: Complete Ownership (No Lock-In) -->
+          <div class="glass-card p-6 sm:p-7 rounded-2xl border border-emerald-900/30 flex flex-col justify-between hover:border-emerald-700/50 transition-all">
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="font-mono text-xs text-emerald-400">06 // FREEDOM &amp; ASSET</span>
+                <span class="font-mono text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800/40">100% YOURS</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white">Complete Ownership (No Lock-In)</h3>
+              <p class="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed font-light">
+                You own 100% of your website code, domain name, and media assets upon project completion. No monthly subscription hostage fees and no proprietary vendor lock-in.
+              </p>
+              <div class="mt-4 pt-3 border-t border-emerald-950 grid grid-cols-2 gap-2 font-mono text-xs text-slate-400">
+                <div>OWNERSHIP: <span class="text-emerald-400 font-semibold">100% Client Property</span></div>
+                <div>HOSTING: <span class="text-white font-semibold">Host Anywhere</span></div>
+              </div>
+            </div>
+            <div class="mt-4 p-2.5 rounded-lg bg-black/60 border border-emerald-950 font-mono text-[11px] text-emerald-400">
+              ✓ Full code &amp; credentials handed over upon launch
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Client Comparison Matrix: Chandu vs Traditional Agency vs Freelancer -->
+        <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-emerald-900/40">
+          <div class="text-center max-w-2xl mx-auto mb-8">
+            <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest font-semibold block mb-1">// THE DECISION MATRIX</span>
+            <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white">Why Working With Chandu Wins</h3>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left font-mono text-xs text-slate-300 border-collapse">
+              <thead>
+                <tr class="border-b border-emerald-950 text-slate-400 text-[11px] uppercase tracking-wider">
+                  <th class="py-3 px-4">Evaluation Metric</th>
+                  <th class="py-3 px-4 text-emerald-400 font-bold bg-emerald-950/30 rounded-t-xl">CHANDU (DIRECT)</th>
+                  <th class="py-3 px-4">TRADITIONAL AGENCY</th>
+                  <th class="py-3 px-4">CHEAP FREELANCER</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-emerald-950/50">
+                <tr>
+                  <td class="py-3.5 px-4 font-semibold text-white">Turnaround Time</td>
+                  <td class="py-3.5 px-4 text-emerald-300 font-bold bg-emerald-950/20">2 — 4 Weeks Fast</td>
+                  <td class="py-3.5 px-4 text-slate-400">3 — 6 Months Slow</td>
+                  <td class="py-3.5 px-4 text-slate-400">Unpredictable / Delays</td>
+                </tr>
+                <tr>
+                  <td class="py-3.5 px-4 font-semibold text-white">Communication</td>
+                  <td class="py-3.5 px-4 text-emerald-300 font-bold bg-emerald-950/20">Direct WhatsApp with Chandu</td>
+                  <td class="py-3.5 px-4 text-slate-400">Multiple account managers</td>
+                  <td class="py-3.5 px-4 text-slate-400">Often disappears for days</td>
+                </tr>
+                <tr>
+                  <td class="py-3.5 px-4 font-semibold text-white">Page Loading Speed</td>
+                  <td class="py-3.5 px-4 text-emerald-300 font-bold bg-emerald-950/20">0.4s Sub-Second Fast</td>
+                  <td class="py-3.5 px-4 text-slate-400">3.5s+ Heavy &amp; Bloated</td>
+                  <td class="py-3.5 px-4 text-slate-400">Slow broken templates</td>
+                </tr>
+                <tr>
+                  <td class="py-3.5 px-4 font-semibold text-white">Pricing &amp; Value</td>
+                  <td class="py-3.5 px-4 text-emerald-300 font-bold bg-emerald-950/20">Fair, Milestone-Based</td>
+                  <td class="py-3.5 px-4 text-slate-400">Expensive $10k+ retainers</td>
+                  <td class="py-3.5 px-4 text-slate-400">Hidden costs to fix bugs</td>
+                </tr>
+                <tr>
+                  <td class="py-3.5 px-4 font-semibold text-white">Code &amp; Asset Ownership</td>
+                  <td class="py-3.5 px-4 text-emerald-300 font-bold bg-emerald-950/20">100% Yours (No Lock-In)</td>
+                  <td class="py-3.5 px-4 text-slate-400">Trapped in proprietary CMS</td>
+                  <td class="py-3.5 px-4 text-slate-400">Messy, hard to maintain</td>
+                </tr>
+                <tr>
+                  <td class="py-3.5 px-4 font-semibold text-white">Post-Launch Support</td>
+                  <td class="py-3.5 px-4 text-emerald-300 font-bold bg-emerald-950/20">Direct 30-Day Assistance</td>
+                  <td class="py-3.5 px-4 text-slate-400">Requires expensive contract</td>
+                  <td class="py-3.5 px-4 text-slate-400">Zero support after payment</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-emerald-950 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+              <div class="text-white font-display font-bold text-lg">Ready to launch your high-converting website?</div>
+              <p class="text-slate-400 text-xs mt-0.5">Let&apos;s discuss your project scope, timeline, and exact requirements.</p>
+            </div>
+            <a href="https://wa.me/917569813732?text=Hi%20Chandu%2C%20I%20would%20like%20to%20discuss%20a%20website%20project." target="_blank" rel="noopener noreferrer" class="btn-primary !py-3 !px-6 !text-xs shrink-0">
+              Message Directly on WhatsApp ↗
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== CREATIVE PROCESS ==================== -->
+    <section id="process" class="relative py-28 w-full overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-emerald-800/40 bg-emerald-950/20 font-mono text-[11px] text-emerald-400 tracking-widest uppercase mb-4">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span>METHODOLOGY // 06</span>
+          </div>
+          <h2 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-white">
+            The Creative <span class="text-gradient-green">Process</span>
+          </h2>
+          <p class="mt-4 text-slate-400 text-base md:text-lg font-light">
+            A systematic, battle-tested execution pipeline: Discover → Design → Develop → Launch.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Step 1 -->
+          <div class="glass-card rounded-2xl p-6 sm:p-7 border border-emerald-900/30 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="p-2.5 rounded-xl bg-emerald-950/40 text-emerald-400 border border-emerald-800/40 font-mono font-bold text-sm">01</span>
+                <span class="font-mono text-[11px] text-emerald-400">DISCOVER</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white mb-2">Discover &amp; Deconstruct</h3>
+              <p class="text-slate-400 text-xs sm:text-sm font-light leading-relaxed mb-4">Deep analysis into target audience psychology, competitor deconstruction, and technical feasibility.</p>
+            </div>
+            <div class="pt-4 border-t border-emerald-950 space-y-1.5 text-[11px] font-mono text-slate-300">
+              <div>✓ Persona &amp; Market Mapping</div>
+              <div>✓ Technical Feasibility Audit</div>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="glass-card rounded-2xl p-6 sm:p-7 border border-emerald-900/30 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="p-2.5 rounded-xl bg-emerald-950/40 text-emerald-300 border border-emerald-800/40 font-mono font-bold text-sm">02</span>
+                <span class="font-mono text-[11px] text-emerald-400">DESIGN</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white mb-2">Design &amp; Prototype</h3>
+              <p class="text-slate-400 text-xs sm:text-sm font-light leading-relaxed mb-4">Crafting bespoke visual identity, high-fidelity prototypes, and tactile micro-interactions.</p>
+            </div>
+            <div class="pt-4 border-t border-emerald-950 space-y-1.5 text-[11px] font-mono text-slate-300">
+              <div>✓ Interactive Wireframes</div>
+              <div>✓ Design Tokens &amp; Motion</div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="glass-card rounded-2xl p-6 sm:p-7 border border-emerald-900/30 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="p-2.5 rounded-xl bg-emerald-950/40 text-emerald-400 border border-emerald-800/40 font-mono font-bold text-sm">03</span>
+                <span class="font-mono text-[11px] text-emerald-400">DEVELOP</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white mb-2">Develop &amp; Optimize</h3>
+              <p class="text-slate-400 text-xs sm:text-sm font-light leading-relaxed mb-4">Clean modular engineering, smooth 3D interactions, and zero-compromise Core Web Vitals.</p>
+            </div>
+            <div class="pt-4 border-t border-emerald-950 space-y-1.5 text-[11px] font-mono text-slate-300">
+              <div>✓ Modular Code Architecture</div>
+              <div>✓ Sub-Second Page Speeds</div>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="glass-card rounded-2xl p-6 sm:p-7 border border-emerald-900/30 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="p-2.5 rounded-xl bg-emerald-950/40 text-emerald-400 border border-emerald-800/40 font-mono font-bold text-sm">04</span>
+                <span class="font-mono text-[11px] text-emerald-400">LAUNCH</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white mb-2">Launch &amp; Scale</h3>
+              <p class="text-slate-400 text-xs sm:text-sm font-light leading-relaxed mb-4">Deploying to global edge networks with strict security, continuous analytics, and growth support.</p>
+            </div>
+            <div class="pt-4 border-t border-emerald-950 space-y-1.5 text-[11px] font-mono text-slate-300">
+              <div>✓ Global CDN Edge Deploy</div>
+              <div>✓ Conversion Tracking Setup</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== CONTACT SECTION ==================== -->
+    <section id="contact" class="relative py-28 w-full overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-emerald-800/40 bg-emerald-950/20 font-mono text-[11px] text-emerald-400 tracking-widest uppercase mb-4">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span>TRANSMISSION // 06</span>
+          </div>
+          <h2 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-white">
+            Let&apos;s Build Something <span class="text-gradient-green">Exceptional</span>
+          </h2>
+          <p class="mt-4 text-slate-400 text-base md:text-lg font-light">
+            Have a visionary project or need a high-impact digital flagship? Connect directly and let&apos;s craft the future.
+          </p>
+        </div>
+
+        <div class="grid lg:grid-cols-12 gap-12 items-start">
+          
+          <!-- Direct Details -->
+          <div class="lg:col-span-5 space-y-6">
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-emerald-900/40 space-y-6">
+              
+              <!-- Creator Bio Banner -->
+              <div class="flex items-center space-x-4 pb-4 border-b border-emerald-950">
+                <div class="relative w-14 h-14 rounded-2xl overflow-hidden border border-emerald-500/50 shrink-0">
+                  <img src="assets/chandu.jpg" alt="Chandu" class="w-full h-full object-cover" />
+                  <span class="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-emerald-500 border-2 border-[#050806]"></span>
+                </div>
+                <div>
+                  <div class="font-display font-bold text-white text-lg flex items-center space-x-1.5">
+                    <span>Chandu</span>
+                    <span class="text-emerald-400 text-xs">✓</span>
+                  </div>
+                  <div class="font-mono text-xs text-emerald-400">Creative Developer &amp; Architect</div>
+                  <div class="font-mono text-[10px] text-slate-400">Direct Inquiries Line // Fast Response</div>
+                </div>
+              </div>
+
+              <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest font-semibold block">DIRECT TRANSMISSION CHANNELS</span>
+              <h3 class="font-display font-bold text-2xl text-white">Available for strategic engagements worldwide.</h3>
+
+              <!-- Direct Email Link -->
+              <a href="mailto:podilachandraprakash@gmail.com" data-cursor="Email" class="flex items-center space-x-4 p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500 transition-all">
+                <div class="p-3 rounded-xl bg-emerald-950/40 text-emerald-400 text-lg">✉</div>
+                <div>
+                  <div class="font-mono text-[11px] text-slate-400 uppercase">DIRECT EMAIL</div>
+                  <div class="font-mono text-xs sm:text-sm text-white break-all">podilachandraprakash@gmail.com</div>
+                </div>
+              </a>
+
+              <!-- Direct WhatsApp Link -->
+              <a href="https://wa.me/917569813732?text=Hi%20Chandu,%20I%20reviewed%20your%20portfolio%20and%20would%20love%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" data-cursor="WhatsApp" class="flex items-center space-x-4 p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500 transition-all">
+                <div class="p-3 rounded-xl bg-emerald-950/40 text-emerald-400 text-lg">💬</div>
+                <div>
+                  <div class="font-mono text-[11px] text-slate-400 uppercase">WHATSAPP CHAT</div>
+                  <div class="font-mono text-sm sm:text-base text-white">+91 75698 13732</div>
+                </div>
+              </a>
+
+              <!-- Direct Phone Call Link -->
+              <a href="tel:+917569813732" data-cursor="Call" class="flex items-center space-x-4 p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500 transition-all">
+                <div class="p-3 rounded-xl bg-emerald-950/40 text-emerald-400 text-lg">📞</div>
+                <div>
+                  <div class="font-mono text-[11px] text-slate-400 uppercase">DIRECT PHONE</div>
+                  <div class="font-mono text-sm sm:text-base text-white">+91 75698 13732</div>
+                </div>
+              </a>
+
+              <!-- Clock & Location -->
+              <div class="pt-4 border-t border-emerald-950 grid grid-cols-2 gap-4 font-mono text-xs">
+                <div>
+                  <div class="text-slate-500">LOCAL TIME</div>
+                  <div id="live-clock" class="text-emerald-400 font-semibold mt-1">12:00:00 PM IST</div>
+                </div>
+                <div>
+                  <div class="text-slate-500">LOCATION</div>
+                  <div class="text-white font-semibold mt-1">Global // Remote</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Dispatch Form -->
+          <div class="lg:col-span-7 glass-panel p-8 sm:p-10 rounded-3xl border border-emerald-900/40 relative">
+            
+            <!-- Success Confirmation State -->
+            <div id="form-success-message" class="hidden py-16 text-center space-y-5">
+              <div class="w-16 h-16 rounded-full bg-emerald-950/60 border border-emerald-500 mx-auto flex items-center justify-center text-emerald-400 font-bold text-2xl">✓</div>
+              <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white">Transmission Received.</h3>
+              <p class="text-slate-300 max-w-md mx-auto text-sm leading-relaxed">
+                Thank you for reaching out. Your project specifications have been prepared. Redirecting to WhatsApp for instant confirmation...
+              </p>
+              <div class="pt-2">
+                <a id="success-redirect-btn" href="https://wa.me/917569813732" target="_blank" rel="noopener noreferrer" class="btn-primary !py-3 !px-6 !text-xs">
+                  Open WhatsApp Directly ↗
+                </a>
+              </div>
+            </div>
+
+            <!-- Form (Clean & Direct) -->
+            <form id="contact-form" class="space-y-6">
+              <div>
+                <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest font-semibold block mb-1">PROJECT DISPATCH TERMINAL</span>
+                <h3 class="font-display font-bold text-2xl text-white">Start a Conversation</h3>
+              </div>
+
+              <!-- Service Selection Chips -->
+              <div>
+                <label class="block font-mono text-xs uppercase tracking-wider text-slate-400 mb-2.5">What capability are you seeking?</label>
+                <div class="flex flex-wrap gap-2">
+                  <button type="button" data-value="Website Development" class="service-chip-btn px-3.5 py-1.5 rounded-xl font-mono text-xs tracking-wider bg-emerald-600 text-white font-bold">Website Development</button>
+                  <button type="button" data-value="Video & Motion" class="service-chip-btn px-3.5 py-1.5 rounded-xl font-mono text-xs tracking-wider bg-slate-900/80 text-slate-400 border border-slate-800">Video &amp; Motion</button>
+                  <button type="button" data-value="Digital Marketing" class="service-chip-btn px-3.5 py-1.5 rounded-xl font-mono text-xs tracking-wider bg-slate-900/80 text-slate-400 border border-slate-800">Digital Marketing</button>
+                  <button type="button" data-value="Social Media" class="service-chip-btn px-3.5 py-1.5 rounded-xl font-mono text-xs tracking-wider bg-slate-900/80 text-slate-400 border border-slate-800">Social Media</button>
+                </div>
+                <input type="hidden" id="contact-service-input" value="Website Development" />
+              </div>
+
+              <!-- Name & Email Inputs -->
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block font-mono text-xs uppercase tracking-wider text-slate-400 mb-1.5">Your Name *</label>
+                  <input type="text" id="contact-name-input" required placeholder="Alex Morgan" class="glass-input" />
+                </div>
+                <div>
+                  <label class="block font-mono text-xs uppercase tracking-wider text-slate-400 mb-1.5">Your Email *</label>
+                  <input type="email" id="contact-email-input" required placeholder="alex.morgan@company.com" class="glass-input" />
+                </div>
+              </div>
+
+              <!-- Project Description Textarea -->
+              <div>
+                <label class="block font-mono text-xs uppercase tracking-wider text-slate-400 mb-1.5">Project Vision &amp; Goals *</label>
+                <textarea id="contact-message-input" rows="4" required placeholder="Tell me about your product, objectives, desired timeline..." class="glass-input resize-none"></textarea>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" data-cursor="Transmit" class="btn-primary w-full !py-4">
+                Initiate Project Transmission →
+              </button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="relative bg-[#030504] border-t border-emerald-950/60 pt-16 pb-12 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-12 border-b border-emerald-950/60">
+        
+        <div class="flex items-center space-x-4">
+          <div class="w-12 h-12 rounded-2xl overflow-hidden border border-emerald-800/40 shrink-0">
+            <img src="assets/chandu.jpg" alt="Chandu" class="w-full h-full object-cover" />
+          </div>
+          <div>
+            <div class="font-display font-bold text-white text-lg">Chandu</div>
+            <div class="font-mono text-xs text-slate-400">Creative Developer &amp; Web Architect</div>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-6 font-mono text-xs text-slate-400">
+          <a href="#about" class="hover:text-emerald-400 transition-colors">About</a>
+          <a href="#services" class="hover:text-emerald-400 transition-colors">Services</a>
+          <a href="#pricing" class="hover:text-emerald-400 transition-colors">Pricing</a>
+          <a href="#projects" class="hover:text-emerald-400 transition-colors">Projects</a>
+          <a href="#advantages" class="hover:text-emerald-400 transition-colors">Why Choose Me</a>
+          <a href="#contact" class="hover:text-emerald-400 transition-colors">Contact</a>
+        </div>
+
+        <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" data-cursor="Top" class="p-3 rounded-xl border border-emerald-900/40 bg-emerald-950/20 text-emerald-400 hover:bg-emerald-600 hover:text-white transition-all">
+          ↑
+        </button>
+      </div>
+
+      <div class="pt-8 flex items-center justify-center font-mono text-[11px] text-slate-500 text-center">
+        <div>&copy; 2026 Chandu. All rights reserved. Crafted with Precision &amp; High-Performance Static Architecture.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Audio, 3D Canvas, and Pure Effect/Redirect Controllers -->
+  <script src="js/audio.js"></script>
+  <script src="js/three-scene.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>
